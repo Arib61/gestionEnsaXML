@@ -1,6 +1,9 @@
 from app import create_app
 from app.controllers.validate_xml import validate_with_dtd, validate_with_xsd, validate_students_constraints, validate_notes_constraints
 
+# Création de l'application Flask
+app = create_app()
+
 def validate_files():
     files_to_validate = [
         {"xml": "data_generated/students/Students_GINF2.xml", "dtd": "schemas/Students.dtd", "xsd": "schemas/Students.xsd"},
@@ -15,15 +18,9 @@ def validate_files():
         validate_students_constraints(file["xml"])
         validate_notes_constraints(file["xml"])
 
-        
-def main():
-    # App logic
-    app = create_app()
-    app.run(host="0.0.0.0", port=5000, debug=True)
-
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "validate":
         validate_files()
     else:
-        main()  # Appelle correctement la fonction
+        app.run(host="0.0.0.0", port=5000, debug=True)
