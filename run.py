@@ -15,15 +15,15 @@ def validate_files():
         validate_students_constraints(file["xml"])
         validate_notes_constraints(file["xml"])
 
+        
 def main():
     # App logic
     app = create_app()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 if __name__ == "__main__":
-    # Lancer soit la validation soit le serveur
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "validate":
         validate_files()
     else:
-        main()
+        main()  # Appelle correctement la fonction
