@@ -200,6 +200,21 @@ def transform_releve():
     else:
         return Response("Erreur lors de la transformation XML → HTML.", mimetype="text/html")
     
+
+@main.route('/transform/student_card', methods=['GET'])
+def transform_student_card():
+    """
+    Route pour transformer student_card.xml en StudentCards.html.
+    """
+    xml_file = "data_generated/student_card/student_card.xml"
+    xslt_file = "templates/html_templates/StudentCard.xslt"
+    output_file = "data_generated/student_card/StudentCard.html"
+
+    if transform_xml_to_html(xml_file, xslt_file, output_file):
+        return Response(f"HTML généré avec succès : <a href='{output_file}'>{output_file}</a>", mimetype="text/html")
+    else:
+        return Response("Erreur lors de la transformation XML → HTML.", mimetype="text/html")
+
 @main.route('/pdf/<file_type>', methods=['GET'])
 def transform_to_pdf(file_type):
     """
