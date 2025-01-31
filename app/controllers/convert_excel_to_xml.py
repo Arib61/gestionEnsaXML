@@ -69,51 +69,11 @@ def convert_students_to_xml(input_file, output_file):
 
 def convert_notes_to_xml(input_file, output_file):
     """
-<<<<<<< HEAD
-    Conversion spécifique pour les notes, avec structure imbriquée et lisible.
-=======
     Convertit les notes en XML avec tri des étudiants par ordre alphabétique du nom.
->>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
     """
     # Charger le fichier Excel
     data = pd.read_excel(input_file)
 
-<<<<<<< HEAD
-    # Grouper par étudiant
-    grouped = data.groupby("CodeApogee")
-
-    # Initialiser l'élément racine
-    root = etree.Element("Students")
-
-    for code_apogee, group in grouped:
-        # Ajouter un élément <Student> pour chaque étudiant
-        student = etree.SubElement(root, "Student")
-        etree.SubElement(student, "CodeApogee").text = str(code_apogee)
-        etree.SubElement(student, "Nom").text = group["Nom"].iloc[0]
-        etree.SubElement(student, "Prenom").text = group["Prenom"].iloc[0]
-        etree.SubElement(student, "DateNaissance").text = group["DateNaissance"].iloc[0]
-
-        # Ajouter les modules
-        modules_elem = etree.SubElement(student, "Modules")
-        module_grouped = group.groupby("Module")
-
-        for module_name, module_group in module_grouped:
-            module = etree.SubElement(modules_elem, "Module")
-            etree.SubElement(module, "Name").text = module_name
-
-            # Ajouter les sous-modules
-            submodules_elem = etree.SubElement(module, "SubModules")
-            for _, row in module_group.iterrows():
-                if row["SousModule"] != "Note Finale":
-                    submodule = etree.SubElement(submodules_elem, "SubModule")
-                    etree.SubElement(submodule, "Name").text = row["SousModule"]
-                    etree.SubElement(submodule, "Note").text = str(row["Note"])
-                else:
-                    # Ajouter la note finale
-                    etree.SubElement(module, "NoteFinale").text = str(row["Note"])
-
-    # Sauvegarder le fichier XML avec indentation
-=======
     # Trier les étudiants par NOM avant la génération du XML
     data_sorted = data.sort_values(by=["Nom", "Prenom"], key=lambda col: col.str.lower())
 
@@ -180,13 +140,8 @@ def convert_notes_to_xml(input_file, output_file):
                 etree.SubElement(module_elem, "NoteFinale").text = module["NoteFinale"]
 
     # Sauvegarder le fichier XML
->>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
     tree = etree.ElementTree(root)
     with open(output_file, "wb") as f:
         tree.write(f, pretty_print=True, xml_declaration=True, encoding="utf-8")
 
-<<<<<<< HEAD
-    print(f"Fichier XML spécifique aux notes généré avec structure lisible : {output_file}")
-=======
     print(f"✅ Fichier XML généré avec tri alphabétique par nom : {output_file}")
->>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
