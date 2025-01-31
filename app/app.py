@@ -201,9 +201,39 @@ if st.button("📤 Convertir les fichiers en XML"):
                 #st.warning(f"⚠️ Aucun fichier chargé pour {key}. Utilisation du fichier par défaut.")
 
         # 🔥 Conversion en XML
+<<<<<<< HEAD
         requests.get(f"{FLASK_BASE_URL}/convert/{key}")
         st.success(f"✅ Fichier {key} converti en XML !")
         st.markdown(f"[📥 Télécharger {key.capitalize()} XML]({FLASK_BASE_URL}/download/xml/{key})", unsafe_allow_html=True)
+=======
+        requests.get(f"{FLASK_BASE_URL}/convert/{key}", params={"file": f"data_excel/{key.capitalize()}_GINF2.xlsx"})
+        st.success(f"✅ Fichier {key} converti en XML !")
+        st.markdown(f"[📥 Télécharger {key.capitalize()} XML]({FLASK_BASE_URL}/convert/{key})", unsafe_allow_html=True)
+
+
+
+# ==========================
+# 5) Valider les fichiers XML
+# ==========================
+st.markdown('<p class="sub-title">🛠️ Vérifier la validité des fichiers XML</p>', unsafe_allow_html=True)
+
+if st.button("🛠️ Valider XML"):
+    # 🔥 Appel API pour la validation
+    response = requests.get(f"{FLASK_BASE_URL}/validate")
+
+    if response.status_code == 200:
+        validation_results = response.json()
+
+        # ✅ Affichage des résultats
+        for result in validation_results:
+            if result["status"] == "Valid":
+                st.success(f"✅ {result['file']} : Valide")
+            else:
+                st.error(f"❌ {result['file']} : Erreur - {result['error']}")
+    else:
+        st.error("❌ Erreur lors de la validation XML")
+
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 
 # ==========================
 # 5) Visualiser les HTML
@@ -215,8 +245,15 @@ html_files = {
     "modules": "data_generated/modules/Modules_GINF2.html",
     "notes":   "data_generated/notes/Notes_GINF2.html",
     "ratt":    "data_generated/notes/Ratt_GINF2.html",
+<<<<<<< HEAD
     "tps":     "data_generated/tp/TP_GINF2.html",
     "releve":  "data_generated/notes/Releve_GINF2.html"
+=======
+    "student_card": "data_generated/student_card/StudentCards_GINF2.html",
+    "tps":     "data_generated/tp/TP_GINF2.html",
+    "releve":  "data_generated/notes/Releve_GINF2.html",
+    "edt":      "data_generated/edt/Edt_GINF2.html"
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 }
 
 # On récupère la liste des clés (students, modules, notes, etc.)
@@ -237,6 +274,10 @@ for i in range(0, len(html_keys), 3):
                 )
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 # ==========================
 # 6) Téléchargement PDF
 # ==========================
@@ -249,7 +290,11 @@ html_files2 = {
     
     "tp":           "data_generated/tp/TP_GINF2.html",
     "releve":       "data_generated/notes/releve.html",
+<<<<<<< HEAD
     #"student_card": "data_generated/student_card/StudentCard.html",
+=======
+    "student_card": "data_generated/student_card/StudentCard.html",
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
     "ratt":         "data_generated/notes/Ratt_GINF2.html",
     "edt":          "data_generated/edt/Edt_GINF2.html"
 }
@@ -283,4 +328,8 @@ for i in range(0, len(pdf_keys), 3):
 # ==========================
 # 7) Pied de page
 # ==========================
+<<<<<<< HEAD
 st.markdown('<p class="footer-text">✅ Utilisez les boutons ci-dessus pour gérer vos fichiers.</p>', unsafe_allow_html=True)
+=======
+st.markdown('<p class="footer-text">✅ Utilisez les boutons ci-dessus pour gérer vos fichiers.</p>', unsafe_allow_html=True)
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)

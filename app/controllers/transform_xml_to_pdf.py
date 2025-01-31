@@ -20,5 +20,9 @@ def transform_xml_to_pdf(xml_file, xslt_file, output_pdf):
         return True
     except subprocess.CalledProcessError as e:
         print(f"❌ Erreur lors de la génération du PDF : {e}")
+<<<<<<< HEAD
         return False
 
+=======
+        return False
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)

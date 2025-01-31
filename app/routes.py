@@ -1,16 +1,68 @@
+<<<<<<< HEAD
 from flask import Blueprint, Response, request, send_file, jsonify , send_from_directory,abort
+=======
+from flask import Blueprint, Response, request, send_file, jsonify, send_from_directory, abort
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 from app.controllers.convert_excel_to_xml import convert_modules_to_xml, convert_students_to_xml, convert_notes_to_xml
 from app.controllers.validate_xml import validate_with_dtd, validate_with_xsd, validate_students_constraints, validate_notes_constraints
 from app.controllers.transform_xml_to_html import transform_xml_to_html
 from app.controllers.transform_xml_to_pdf import transform_xml_to_pdf
+<<<<<<< HEAD
 
 import os
+=======
+from app.controllers.convert_student_to_card import generate_student_cards
+from app.controllers.generate_tp_groups import execute_xquery
+import os
+import subprocess
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def home():
+<<<<<<< HEAD
     return "Bienvenue sur l'API de conversion Excel vers XML."
+=======
+    """
+    Page d'accueil affichant toutes les routes disponibles avec leur description.
+    """
+    routes_description = {
+        "Bienvenue": "API pour la conversion Excel en XML, validation, transformation et generation de documents.",
+
+        "Routes principales": {
+            "/convert/modules": "Convertit le fichier Modules_GINF2.xlsx en XML.",
+            "/convert/students": "Convertit le fichier Students_GINF2.xlsx en XML.",
+            "/convert/notes": "Convertit le fichier Notes_GINF2.xlsx en XML, avec tri et formatage des notes.",
+            "/validate": "Valide les fichiers XML generes avec les DTD et XSD correspondants.",
+            "/generateTP": "Execute une requete XQuery pour generer les groupes de TP.",
+            "/studenttocard": "Convertit fichier xml students en ficher xml student cards"
+        },
+
+        "Transformation XML en HTML": {
+            "/transform/notes": "Genere un fichier HTML pour l'affichage des notes.",
+            "/transform/ratt": "Genere un HTML pour les notes de rattrapage.",
+            "/transform/modules": "Genere un fichier HTML pour les modules.",
+            "/transform/tps": "Genere un fichier HTML pour les groupes de TP.",
+            "/transform/edt": "Genere un fichier HTML pour emploi du temps.",
+            "/transform/students": "Genere un fichier HTML pour la liste des etudiants.",
+            "/transform/releve": "Genere un HTML pour le releve de notes."
+        },
+
+        "Generation XML en PDF": {
+            "/pdf/students": "Genere un PDF contenant la liste des etudiants.",
+            "/pdf/modules": "Genere un PDF avec la liste des modules.",
+            "/pdf/notes": "Genere un relevé de notes au format PDF.",
+            "/pdf/student_card": "Genere un PDF contenant les cartes etudiants.",
+            "/pdf/edt": "Genereun PDF pour emploi du temps.",
+            "/pdf/releve": "Genere un PDF du releve de notes.",
+            "/pdf/tp": "Genere un PDF des groupes de TP.",
+            "/pdf/ratt": "Genere un PDF des notes de rattrapage."
+        }
+    }
+    
+    return jsonify(routes_description), 200
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 
 # Route pour les modules
 @main.route('/convert/modules', methods=['GET'])
@@ -98,6 +150,7 @@ def validate_files():
 
     return jsonify(results), 200  
 
+<<<<<<< HEAD
 
 @main.route('/transform/notes', methods=['GET'])
 def transform_notes():
@@ -197,6 +250,104 @@ def transform_releve():
 
     if transform_xml_to_html(xml_file, xslt_file, output_file):
         return Response(f"HTML généré avec succès : <a href='{output_file}'>{output_file}</a>", mimetype="text/html")
+=======
+@main.route('/generateTP', methods=['GET'])
+def generate_tp():
+    """
+    Exécute la requête XQuery et génère le fichier XML TP.
+    """
+    try:
+        execute_xquery()
+        return jsonify({"message": "Le fichier TP a été généré avec succès"}), 200
+    except subprocess.CalledProcessError as e:
+        return jsonify({"error": f"Erreur d'exécution de la requête XQuery : {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Erreur inattendue : {str(e)}"}), 500
+
+@main.route('/transform/<file_type>', methods=['GET'])
+def transform_html(file_type):
+    """
+    Route dynamique pour transformer des fichiers XML en HTML en utilisant un mapping prédéfini.
+    Route dynamique pour transformer des fichiers XML en HTML en utilisant un mapping prédéfini.
+    """
+    file_mapping = {
+        "notes": {
+            "xml": "data_generated/notes/Notes_GINF2.xml",
+            "xslt": "templates/html_templates/Notes.xslt",
+            "html": "data_generated/notes/Notes_GINF2.html"
+        },
+        "ratt": {
+            "xml": "data_generated/notes/Notes_GINF2.xml",
+            "xslt": "templates/html_templates/Ratt.xslt",
+            "html": "data_generated/notes/Ratt_GINF2.html"
+        },
+        "modules": {
+            "xml": "data_generated/modules/Modules_GINF2.xml",
+            "xslt": "templates/html_templates/Modules.xslt",
+            "html": "data_generated/modules/Modules_GINF2.html"
+        },
+        "tps": {
+            "xml": "data_generated/tp/TP_GINF2.xml",
+            "xslt": "templates/html_templates/GroupeTP.xslt",
+            "html": "data_generated/tp/TP_GINF2.html"
+        },
+        "edt": {
+            "xml": "data_generated/edt/Edt_GINF2.xml",
+            "xslt": "templates/html_templates/Edt.xslt",
+            "html": "data_generated/edt/Edt_GINF2.html"
+        },
+        "students": {
+            "xml": "data_generated/students/Students_GINF2.xml",
+            "xslt": "templates/html_templates/Students.xslt",
+            "html": "data_generated/students/Students_GINF2.html"
+        },
+        "releve": {
+            "xml": "data_generated/notes/Notes_GINF2.xml",
+            "xslt": "templates/html_templates/Releve.xslt",
+            "html": "data_generated/notes/Releve_GINF2.html"
+        },
+        "student_card": {  # 🔥 Ajout ici
+        "xml": "data_generated/student_card/StudentCards_GINF2.xml",
+        "xslt": "templates/html_templates/StudentCards.xslt",
+        "html": "data_generated/student_card/StudentCards_GINF2.html"
+        }
+    }
+
+    if file_type not in file_mapping:
+        return Response(f"Type de fichier '{file_type}' non valide.", status=400, mimetype="text/html")
+    if file_type not in file_mapping:
+        return Response(f"Type de fichier '{file_type}' non valide.", status=400, mimetype="text/html")
+
+    config = file_mapping[file_type]
+    xml_path = os.path.abspath(config['xml'])
+    xslt_path = os.path.abspath(config['xslt'])
+    html_path = os.path.abspath(config['html'])
+    config = file_mapping[file_type]
+    xml_path = os.path.abspath(config['xml'])
+    xslt_path = os.path.abspath(config['xslt'])
+    html_path = os.path.abspath(config['html'])
+
+    # Vérification de l'existence des fichiers
+    if not os.path.exists(xml_path):
+        return Response(f"Fichier XML introuvable : {config['xml']}", status=404, mimetype="text/html")
+    if not os.path.exists(xslt_path):
+        return Response(f"Fichier XSLT introuvable : {config['xslt']}", status=404, mimetype="text/html")
+
+    # Transformation XML → HTML
+    if transform_xml_to_html(xml_path, xslt_path, html_path):
+        html_url = f"/{config['html'].replace(os.sep, '/')}"  # Génération de l'URL correcte
+        return Response(f"HTML généré avec succès : <a href='{html_url}'>{html_url}</a>", mimetype="text/html")
+    # Vérification de l'existence des fichiers
+    if not os.path.exists(xml_path):
+        return Response(f"Fichier XML introuvable : {config['xml']}", status=404, mimetype="text/html")
+    if not os.path.exists(xslt_path):
+        return Response(f"Fichier XSLT introuvable : {config['xslt']}", status=404, mimetype="text/html")
+
+    # Transformation XML → HTML
+    if transform_xml_to_html(xml_path, xslt_path, html_path):
+        html_url = f"/{config['html'].replace(os.sep, '/')}"  # Génération de l'URL correcte
+        return Response(f"HTML généré avec succès : <a href='{html_url}'>{html_url}</a>", mimetype="text/html")
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
     else:
         return Response("Erreur lors de la transformation XML → HTML.", mimetype="text/html")
     
@@ -223,9 +374,15 @@ def transform_to_pdf(file_type):
                 "pdf": os.path.abspath("data_generated/notes/Notes_GINF2.pdf")
             },
              "student_card": {
+<<<<<<< HEAD
                 "xml": os.path.abspath("data_generated/student_card/student_card.xml"),
                 "xslt": os.path.abspath("templates/pdf_templates/StudentCard.fo"),
                 "pdf": os.path.abspath("data_generated/student_card/StudentCard.pdf")
+=======
+                "xml": os.path.abspath("data_generated/student_card/StudentCards_GINF2.xml"),
+                "xslt": os.path.abspath("templates/pdf_templates/StudentCards.fo"),
+                "pdf": os.path.abspath("data_generated/student_card/StudentCards.pdf")
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
             },
             "edt": {
                 "xml": os.path.abspath("data_generated/edt/Edt_GINF2.xml"),
@@ -235,7 +392,11 @@ def transform_to_pdf(file_type):
             "releve": {
                 "xml": os.path.abspath("data_generated/notes/Notes_GINF2.xml"),
                 "xslt": os.path.abspath("templates/pdf_templates/Releve.fo"),
+<<<<<<< HEAD
                 "pdf": os.path.abspath("data_generated/notes/releve.pdf")
+=======
+                "pdf": os.path.abspath("data_generated/notes/Releve_GINF2.pdf")
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
             },
              "tp": {
                 "xml": os.path.abspath("data_generated/tp/TP_GINF2.xml"),
@@ -246,10 +407,19 @@ def transform_to_pdf(file_type):
                 "xml": os.path.abspath("data_generated/notes/Notes_GINF2.xml"),
                 "xslt": os.path.abspath("templates/pdf_templates/Ratt.fo"),
                 "pdf": os.path.abspath("data_generated/notes/Ratt_GINF2.pdf")
+<<<<<<< HEAD
             }
            
             
         }
+=======
+            }          
+            
+        }
+                
+            
+    
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 
         if file_type not in file_mapping:
             return Response(f"Type '{file_type}' non valide.", status=400)
@@ -280,6 +450,7 @@ def transform_to_pdf(file_type):
     except Exception as e:
         print(f"❌ Erreur interne : {str(e)}")
         return Response(f"Erreur interne : {str(e)}", status=500)
+<<<<<<< HEAD
 
 
 @main.route('/static/images/<path:filename>')
@@ -292,6 +463,31 @@ def serve_generated_files(filename):
     Sert les fichiers HTML générés dans le dossier `data_generated`
     """
     return send_from_directory(os.path.join(os.getcwd(), 'data_generated'), filename)
+=======
+    
+@main.route('/studenttocard', methods=['GET'])
+def convert_card():
+    input_file = "data_generated/students/Students_GINF2.xml"
+    output_file = "data_generated/student_card/StudentCards_GINF2.xml"
+
+    # Vérification si le fichier d'entrée existe
+    if not os.path.exists(input_file):
+        return jsonify({"error": f"Input file '{input_file}' does not exist"}), 400
+
+    try:
+        # Vérification si le fichier de sortie existe déjà
+        if not os.path.exists(output_file):
+            # Création du dossier parent si nécessaire
+            os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+        # Appel de la fonction pour convertir les étudiants
+        generate_student_cards(input_file, output_file)
+
+        return jsonify({"message": f"Output saved to {output_file}"}), 200
+    except Exception as e:
+        # Retourner une erreur si la conversion échoue
+        return jsonify({"error": str(e)}), 500
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
 
 DEFAULT_EXCEL_PATH = "data_excel"
 
@@ -304,6 +500,7 @@ def serve_default_excel(filename):
     else:
         abort(404, description="Fichier non trouvé")
 
+<<<<<<< HEAD
 @main.route('/download/xml/<file_type>', methods=['GET'])
 def download_xml(file_type):
     """
@@ -357,3 +554,15 @@ def generate_student_card_pdf():
 @main.route('/static/images/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static/images', filename)
+=======
+@main.route('/static/images/<path:filename>')
+def serve_image(filename):
+    return send_from_directory(os.path.join(main.root_path, '../static/images'), filename)
+
+@main.route('/data_generated/<path:filename>')
+def serve_generated_files(filename):
+    """
+    Sert les fichiers HTML générés dans le dossier `data_generated`
+    """
+    return send_from_directory(os.path.join(os.getcwd(), 'data_generated'), filename)
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)

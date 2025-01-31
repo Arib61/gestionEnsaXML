@@ -35,6 +35,7 @@
             </head>
             <body>
             <!-- Header Section -->
+<<<<<<< HEAD
             <div class="header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3cm;">
                 <!-- Left Logo -->
                 <div style="flex: 1; text-align: center;">
@@ -54,6 +55,27 @@
                 </div>
             </div>
                             <h1>Liste des Étudiants</h1>
+=======
+<div class="header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3cm;">
+                    <!-- Left Logo -->
+                    <div style="flex: 1; text-align: center;">
+                        <img src="http://127.0.0.1:5000/static/images/logo_uae.png" style="height: 2cm;" alt="Logo UAE"/>
+                    </div>
+
+                    <!-- Center Text -->
+                    <div style="flex: 2; text-align: center; font-size: 12pt; font-weight: bold;">
+                        Université Abdelmalek Essaâdi<br/>
+                        Ecole Nationale des Sciences Appliquées<br/>
+                        Tanger
+                    </div>
+
+                    <!-- Right Logo -->
+                    <div style="flex: 1; text-align: center;">
+                        <img src="http://127.0.0.1:5000/static/images/logo_ensa.png" style="height: 2cm;" alt="Logo ENSAT"/>
+                    </div>
+                </div>
+                <h1>Liste des Étudiants</h1>
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
                 <table>
                     <thead>
                         <tr>
@@ -84,4 +106,8 @@
             </body>
         </html>
     </xsl:template>
+<<<<<<< HEAD
 </xsl:stylesheet>
+=======
+</xsl:stylesheet>
+>>>>>>> a1c9e39 (Ajout des nouvelles mises à jour dans Arib_Final_Flask)
