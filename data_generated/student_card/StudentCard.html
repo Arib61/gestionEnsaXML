@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Cartes d'&#201;tudiants</title>
+<style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        text-align: center;
+                        padding: 20px;
+                    }
+                    .container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 20px;
+                    }
+                    .card {
+                        width: 350px;
+                        height: 180px;
+                        border: 2px solid black;
+                        background: white;
+                        padding: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+                    }
+                    .header, .footer {
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                        color: #191970;
+                    }
+                    .title {
+                        text-align: center;
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #ff7f00;
+                        border-bottom: 2px solid #191970;
+                        margin-bottom: 5px;
+                    }
+                    .content {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .left, .right {
+                        flex: 1;
+                        text-align: center;
+                    }
+                    .left img, .right img {
+                        max-width: 60px;
+                        max-height: 60px;
+                    }
+                    .student-info {
+                        flex: 2;
+                        text-align: left;
+                        font-size: 14px;
+                        font-weight: bold;
+                        padding-left: 10px;
+                    }
+                </style>
+</head>
+<body>
+<h1>Cartes d'&#201;tudiants</h1>
+<div class="container"><div class="card">
+<div class="header">
+<p>Universit&#233; Abdelmalek Essa&#226;di</p>
+<p>Ecole Nationale des Sciences Appliqu&#233;es </p>
+<p>Tanger</p>
+</div>
+<div class="title">CARTE D'ETUDIANT</div>
+<div class="content">
+<div class="left"><img src="http://127.0.0.1:5000/static/images/photoEtudiante.jpg" alt="Photo &#201;tudiant"></div>
+<div class="student-info">
+<p>ABOU-EL KASEMKenza</p>
+<p>Code Apog&#233;e: 21011326</p>
+</div>
+<div class="right"><img src="http://127.0.0.1:5000/static/images/logo_ensa.png" alt="Logo ENSA"></div>
+</div>
+<div class="footer"><p>Premi&#232;re Inscription : 2021 / 2022</p></div>
+</div></div>
+</body>
+</html>

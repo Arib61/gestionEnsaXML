@@ -357,3 +357,17 @@ def generate_student_card_pdf():
 @main.route('/static/images/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static/images', filename)
+
+@main.route('/transform/student_card', methods=['GET'])
+def transform_student_card():
+    """
+    Route pour transformer student_card.xml en StudentCards.html.
+    """
+    xml_file = "data_generated/student_card/student_card.xml"
+    xslt_file = "templates/html_templates/StudentCard.xslt"
+    output_file = "data_generated/student_card/StudentCard.html"
+
+    if transform_xml_to_html(xml_file, xslt_file, output_file):
+        return Response(f"HTML généré avec succès : <a href='{output_file}'>{output_file}</a>", mimetype="text/html")
+    else:
+        return Response("Erreur lors de la transformation XML → HTML.", mimetype="text/html")

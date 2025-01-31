@@ -205,6 +205,29 @@ if st.button("📤 Convertir les fichiers en XML"):
         st.success(f"✅ Fichier {key} converti en XML !")
         st.markdown(f"[📥 Télécharger {key.capitalize()} XML]({FLASK_BASE_URL}/download/xml/{key})", unsafe_allow_html=True)
 
+
+# ==========================
+# 5) Valider les fichiers XML
+# ==========================
+st.markdown('<p class="sub-title">🛠️ Vérifier la validité des fichiers XML</p>', unsafe_allow_html=True)
+
+if st.button("🛠️ Valider XML"):
+    # 🔥 Appel API pour la validation
+    response = requests.get(f"{FLASK_BASE_URL}/validate")
+
+    if response.status_code == 200:
+        validation_results = response.json()
+
+        # ✅ Affichage des résultats
+        for result in validation_results:
+            if result["status"] == "Valid":
+                st.success(f"✅ {result['file']} : Valide")
+            else:
+                st.error(f"❌ {result['file']} : Erreur - {result['error']}")
+    else:
+        st.error("❌ Erreur lors de la validation XML")
+
+
 # ==========================
 # 5) Visualiser les HTML
 # ==========================
@@ -215,8 +238,10 @@ html_files = {
     "modules": "data_generated/modules/Modules_GINF2.html",
     "notes":   "data_generated/notes/Notes_GINF2.html",
     "ratt":    "data_generated/notes/Ratt_GINF2.html",
+    "student_card": "data_generated/student_card/StudentCard.html",
     "tps":     "data_generated/tp/TP_GINF2.html",
-    "releve":  "data_generated/notes/Releve_GINF2.html"
+    "releve":  "data_generated/notes/Releve_GINF2.html",
+    "edt":      "data_generated/edt/Edt_GINF2.html"
 }
 
 # On récupère la liste des clés (students, modules, notes, etc.)
@@ -249,7 +274,7 @@ html_files2 = {
     
     "tp":           "data_generated/tp/TP_GINF2.html",
     "releve":       "data_generated/notes/releve.html",
-    #"student_card": "data_generated/student_card/StudentCard.html",
+    "student_card": "data_generated/student_card/StudentCard.html",
     "ratt":         "data_generated/notes/Ratt_GINF2.html",
     "edt":          "data_generated/edt/Edt_GINF2.html"
 }
